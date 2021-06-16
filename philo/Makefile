@@ -6,14 +6,14 @@
 #    By: kmacquet <kmacquet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/13 17:07:03 by kmacquet          #+#    #+#              #
-#    Updated: 2021/06/13 17:48:49 by kmacquet         ###   ########.fr        #
+#    Updated: 2021/06/16 17:33:51 by kmacquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = main.c
+SRCS = main.c action.c init.c utils.c
 OBJS = $(SRCS:.c=.o)
 RM = rm -rf
 
