@@ -6,7 +6,7 @@
 /*   By: kmacquet <kmacquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 17:46:55 by kmacquet          #+#    #+#             */
-/*   Updated: 2021/06/16 18:24:51 by kmacquet         ###   ########.fr       */
+/*   Updated: 2021/06/16 20:00:31 by kmacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void				free_tab(pthread_t *philo, pthread_t *monitor,
 void				send_m(t_philo *philo, int i);
 char				*get_m(int i);
 void				*checker(void *arg);
+int					ft_isnotnum(char *s);
 
 #endif

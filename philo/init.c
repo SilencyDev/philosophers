@@ -6,7 +6,7 @@
 /*   By: kmacquet <kmacquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 17:24:18 by kmacquet          #+#    #+#             */
-/*   Updated: 2021/06/16 19:16:29 by kmacquet         ###   ########.fr       */
+/*   Updated: 2021/06/16 20:00:19 by kmacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,15 @@ void	ft_init_philo(t_data *data, int n, int nb)
 		else
 			data->philo[n].rfork = &data->fork[n - 1];
 	}
+}
+
+int	ft_isnotnum(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+		if (s[i] < '0' || s[i] > '9')
+			return (1);
+	return (0);
 }
