@@ -6,19 +6,18 @@
 /*   By: kmacquet <kmacquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 17:24:18 by kmacquet          #+#    #+#             */
-/*   Updated: 2021/06/16 17:44:40 by kmacquet         ###   ########.fr       */
+/*   Updated: 2021/06/16 18:37:37 by kmacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	ft_init(t_data *data, char **av)
+void	ft_init(t_data *data, char **av, int ac)
 {
 	int	nb;
 
-	nb = ft_atoi(av[1]);
+	nb = data->nb;
 	data->tod = set_time();
-	data->nb = nb;
 	data->fork = malloc(sizeof(pthread_mutex_t) * nb);
 	data->philo = malloc(sizeof(t_philo) * nb);
 	while (--nb >= 0)
@@ -27,7 +26,9 @@ void	ft_init(t_data *data, char **av)
 	data->tts = ft_atoi(av[4]);
 	data->ttt = 0;
 	data->ttd = ft_atoi(av[2]);
-	data->alive = 1;
+	data->meals = -1;
+	if (ac == 6)
+		data->meals = ft_atoi(av[5]);
 	pthread_mutex_init(&data->dead, NULL);
 	pthread_mutex_init(&data->display, NULL);
 }

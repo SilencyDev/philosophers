@@ -6,7 +6,7 @@
 /*   By: kmacquet <kmacquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 17:46:55 by kmacquet          #+#    #+#             */
-/*   Updated: 2021/06/16 17:47:19 by kmacquet         ###   ########.fr       */
+/*   Updated: 2021/06/16 18:24:51 by kmacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define DIE 4
 # define MEAL 5
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
@@ -33,14 +33,14 @@ typedef struct s_philo
 	int					eat;
 	unsigned long long	ta;
 	int					meal;
-	t_data			*data;
-	pthread_mutex_t	*lfork;
-	pthread_mutex_t	*rfork;
-}				t_philo;
+	t_data				*data;
+	pthread_mutex_t		*lfork;
+	pthread_mutex_t		*rfork;
+}						t_philo;
 
 typedef struct s_data
 {
-	int					alive;
+	int					meals;
 	pthread_mutex_t		dead;
 	pthread_mutex_t		display;
 	int					stop;
@@ -52,17 +52,18 @@ typedef struct s_data
 	unsigned long long	ttd;
 	pthread_mutex_t		*fork;
 	t_philo				*philo;
-}				t_data;
+}						t_data;
 
-void				ft_init(t_data *data, char **av);
+void				ft_init(t_data *data, char **av, int ac);
 void				ft_init_philo(t_data *data, int n, int nb);
 void				fork_on(t_philo *philo);
 void				eat_on(t_philo *philo);
 void				fork_off(t_philo *philo);
 void				sleep_on(t_philo *philo);
 int					ft_atoi(char *str);
-unsigned long long	set_time();
-void				free_tab(pthread_t *philo, pthread_t *monitor, pthread_mutex_t *fork);
+unsigned long long	set_time(void);
+void				free_tab(pthread_t *philo, pthread_t *monitor,
+						pthread_mutex_t *fork);
 void				send_m(t_philo *philo, int i);
 char				*get_m(int i);
 void				*checker(void *arg);
