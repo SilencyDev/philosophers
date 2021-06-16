@@ -6,7 +6,7 @@
 /*   By: kmacquet <kmacquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 17:49:03 by kmacquet          #+#    #+#             */
-/*   Updated: 2021/06/16 18:37:05 by kmacquet         ###   ########.fr       */
+/*   Updated: 2021/06/16 19:33:25 by kmacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	*checker(void *arg)
 {
 	t_philo	*philo;
-	int		n;
 
 	philo = (t_philo *)arg;
-	n = philo->data->nb;
 	while (1)
 	{
 		if ((!philo->eat && set_time() - philo->ta > philo->data->ttd)
@@ -35,7 +33,7 @@ void	*checker(void *arg)
 	return (NULL);
 }
 
-void	*f1(void *arg)
+void	*fork_you(void *arg)
 {
 	t_philo	*philo;
 
@@ -63,9 +61,22 @@ void	init_threads(t_data *data, pthread_t *philo, pthread_t *monitor)
 	{
 		data->philo[n].meal = data->meals;
 		data->philo[n].i = n;
-		pthread_create(&philo[n], NULL, f1, &data->philo[n]);
-		usleep(100);
-		pthread_create(&monitor[n], NULL, checker, &data->philo[n]);
+		if (n % 2 == 0)
+		{
+			pthread_create(&philo[n], NULL, fork_you, &data->philo[n]);
+			usleep(50);
+			pthread_create(&monitor[n], NULL, checker, &data->philo[n]);
+		}
+	}
+	n = data->nb;
+	while (--n >= 0)
+	{
+		if (n % 2 != 0)
+		{
+			pthread_create(&philo[n], NULL, fork_you, &data->philo[n]);
+			usleep(50);
+			pthread_create(&monitor[n], NULL, checker, &data->philo[n]);
+		}
 	}
 }
 
