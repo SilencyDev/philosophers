@@ -6,7 +6,7 @@
 /*   By: kmacquet <kmacquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 17:49:03 by kmacquet          #+#    #+#             */
-/*   Updated: 2021/06/16 20:02:21 by kmacquet         ###   ########.fr       */
+/*   Updated: 2021/06/17 11:23:33 by kmacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	*checker(void *arg)
 			pthread_mutex_unlock(&philo->data->dead);
 			break ;
 		}
+		usleep(2000);
 	}
 	return (NULL);
 }
@@ -61,7 +62,7 @@ void	init_threads(t_data *data, pthread_t *philo, pthread_t *monitor)
 	{
 		data->philo[n].meal = data->meals;
 		data->philo[n].i = n;
-		if (n % 2 == 0)
+		if (n % 2 != 0)
 		{
 			pthread_create(&philo[n], NULL, fork_you, &data->philo[n]);
 			usleep(50);
@@ -69,9 +70,10 @@ void	init_threads(t_data *data, pthread_t *philo, pthread_t *monitor)
 		}
 	}
 	n = data->nb;
+	usleep(100);
 	while (--n >= 0)
 	{
-		if (n % 2 != 0)
+		if (n % 2 == 0)
 		{
 			pthread_create(&philo[n], NULL, fork_you, &data->philo[n]);
 			usleep(50);
@@ -110,6 +112,7 @@ int	main(int ac, char **av)
 	init_threads(&data, philo, monitor);
 	pthread_mutex_lock(&data.dead);
 	pthread_mutex_unlock(&data.dead);
+	usleep(100);
 	free_tab(monitor, philo, data.fork);
 	return (0);
 }
