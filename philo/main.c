@@ -6,7 +6,7 @@
 /*   By: kmacquet <kmacquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 17:49:03 by kmacquet          #+#    #+#             */
-/*   Updated: 2021/06/17 11:23:33 by kmacquet         ###   ########.fr       */
+/*   Updated: 2021/06/17 14:01:38 by kmacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	*checker(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
+		usleep(2000);
 		if ((!philo->eat && set_time() - philo->ta > philo->data->ttd)
 			|| philo->meal == 0)
 		{
@@ -29,7 +30,6 @@ void	*checker(void *arg)
 			pthread_mutex_unlock(&philo->data->dead);
 			break ;
 		}
-		usleep(2000);
 	}
 	return (NULL);
 }
@@ -65,18 +65,16 @@ void	init_threads(t_data *data, pthread_t *philo, pthread_t *monitor)
 		if (n % 2 != 0)
 		{
 			pthread_create(&philo[n], NULL, fork_you, &data->philo[n]);
-			usleep(50);
 			pthread_create(&monitor[n], NULL, checker, &data->philo[n]);
 		}
 	}
 	n = data->nb;
-	usleep(100);
+	usleep(200);
 	while (--n >= 0)
 	{
 		if (n % 2 == 0)
 		{
 			pthread_create(&philo[n], NULL, fork_you, &data->philo[n]);
-			usleep(50);
 			pthread_create(&monitor[n], NULL, checker, &data->philo[n]);
 		}
 	}
@@ -100,12 +98,14 @@ int	main(int ac, char **av)
 	pthread_t	*monitor;
 
 	if (ac < 5 || ac > 6)
-		return (1);
+		return (0);
 	if (check_arg(av))
 		return (0);
 	data.nb = ft_atoi(av[1]);
 	philo = malloc(sizeof(pthread_t) * data.nb);
 	monitor = malloc(sizeof(pthread_t) * data.nb);
+	if (!philo || !monitor)
+		return (1);
 	ft_init(&data, av, ac);
 	ft_init_philo(&data, data.nb, data.nb);
 	pthread_mutex_lock(&data.dead);
